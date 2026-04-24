@@ -1,0 +1,63 @@
+const input = require('sync-input')
+
+/*
+Write how many ml of water the coffee machine has:
+> n
+Write how many ml of milk the coffee machine has:
+> n
+Write how many grams of coffee beans the coffee machine has:
+> n
+Write how many cups of coffee you will need:
+> n
+__Yes, I can make that amount of coffee__??
+*/
+
+let waterAmount, milkAmount, beansAmount, cupsAmount, provision;
+
+const waterApplication = `Write how many ml of water the coffee machine has:`;
+const milkApplication = `Write how many ml of milk the coffe machine has:`;
+const beansApplication = `Write how many grams of coffee beans the coffee machine has:`;
+const cupsApplication = `Write how many cups of coffee you will need:`;
+
+waterAmount = Number(input(waterApplication));
+milkAmount = Number(input(milkApplication));
+beansAmount = Number(input(beansApplication));
+cupsAmount = Number(input(cupsApplication));
+
+const secretRecipe = {
+    waterRecipe: 200,
+    milkRecipe: 50,
+    beansRecipe: 15
+};
+
+waterAmount = Math.floor(waterAmount / secretRecipe.waterRecipe);
+milkAmount = Math.floor(milkAmount / secretRecipe.milkRecipe);
+beansAmount = Math.floor(beansAmount / secretRecipe.beansRecipe);
+
+if (waterAmount < milkAmount) {
+    if (waterAmount < beansAmount) {
+        provision = waterAmount;
+    } else {
+        provision = beansAmount;
+    }
+} else if (waterAmount > milkAmount) {
+    if (milkAmount < beansAmount) {
+        provision = milkAmount;
+    } else {
+        provision = beansAmount;
+    }
+} else {
+    if (beansAmount < milkAmount) {
+        provision = beansAmount;
+    } else {
+        provision = waterAmount; 
+    }
+}
+
+if (provision > cupsAmount) {
+    console.log(`Yes, I can make that amount of coffee (and even ${provision - cupsAmount} more than that)`);
+} else if (provision < cupsAmount) {
+    console.log(`No, I can make only ${provision} cups of coffee`);
+} else {
+    console.log(`Yes, I can make that amount of coffee`);
+}
